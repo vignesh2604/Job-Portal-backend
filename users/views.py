@@ -29,6 +29,14 @@ class CustomUserViewSet(viewsets.ViewSet):
         serializer = CustomUserSerializer(data=request.data)
 
         if serializer.is_valid():
+            send_mail(subject="User Registration at Job Portal",
+                message=f"Hi {request.data.get('username')}, \
+                \n Welcome to the Job portal application \
+                \n Please go ahead and complete your profile to let us find the best jobs for you..",
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[request.data.get('email')],
+                fail_silently=False)
+            print("Email sent..")
             serializer.save()
             return Response({
                 'message': 'User data submitted successfully',
@@ -49,7 +57,6 @@ class JobSeekerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsJobSeeker, IsAuthenticated]
     serializer_class =  JobSeekerSerializer
     
-    
     def list(self, request):
         # Retrive the current user Details
         queryset = JobSeeker.objects.filter(user_id=request.user.id)
@@ -67,9 +74,6 @@ class JobSeekerViewSet(viewsets.ModelViewSet):
             updated_data = {}
             print(f" Response: {updated_data}")
             return Response(updated_data, status=status.HTTP_400_BAD_REQUEST)
-
-        
-
 
     def create(self, request):
         
@@ -220,19 +224,28 @@ class fetchUserDetails(APIView):
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# test to send email using Django
-class TestEmail(APIView):
+# Display list of job seeker profiles to all the users of the application 
+class RetrieveJobSeekersList(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         try:
-            send_mail(subject="New applicant for the job:",
-                message="Hi, \n A new applicant has applied for the you've posted..",
-                from_email=EMAIL_HOST_USER,
-                recipient_list=["vigneshwar2604@gmail.com"],
-                fail_silently=False)
-            print("Email sent..")
-            return Response({"message":"Message sent"
-                            }, 
-                            status=status.HTTP_200_OK)
+            queryset = JobSeeker.objects.all()
+            print(f"Fetching all job seekers: {queryset}")
+            serializer = JobSeekerSerializer(queryset, many=True)
+            mutable_data = serializer.data
+            # Get user email, name from CustomUser table
+            for i, id in enumerate(queryset):
+                print(f"Username: {id.user} -> Email: {id.user.email}")
+                print(f"Here :: {mutable_data[i]}")
+                mutable_data[i]['username'] = id.user.username
+                mutable_data[i]['email'] = id.user.email
+                
+            return Response({
+                "message": "List of jobseeker details fetched successfully",
+                "jobseekers":mutable_data
+                }, status = status.HTTP_200_OK)
         except Exception as e:
-            print(e)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            print(f"Error info: {e}")
+            return Response({
+            "message": "Cannot retrieve data at this time.."
+            }, status = status.HTTP_400_BAD_REQUEST)

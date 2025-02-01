@@ -10,6 +10,7 @@ class JobInfo(models.Model):
     title = models.CharField(max_length=50, null=False)
     experience = models.CharField(max_length=10, null=False)
     company = models.CharField(max_length=100, null=False)
+    industry = models.CharField(max_length=100, null=False)  #IT, Manufacturing ....
     location = models.CharField(max_length=100, null=False)
     job_description = models.TextField(null=True, blank=True)
     job_type = models.CharField(max_length=50, null=False, default='Full-time')
@@ -21,7 +22,7 @@ class JobInfo(models.Model):
     # To describe uniqueness in the data being created
     class Meta:
         unique_together = ('title', 'company', 'experience', 
-                            'location', 'salary', 'job_description')
+                            'location')
 
     def __str__(self):
         return self.title

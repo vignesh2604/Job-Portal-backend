@@ -15,5 +15,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('fetchUser/', views.fetchUserDetails.as_view(), name='fetchUser'),
-    path('testemail/', views.TestEmail.as_view(), name="testEmail")
+    path('getJobseekers/', views.RetrieveJobSeekersList.as_view(), name="JobseekersList")
 ]

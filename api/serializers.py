@@ -28,7 +28,7 @@ class JobInfoSerializer(serializers.ModelSerializer):
         validated_data['recruiter'] = Recruiter.objects.get(id=recruiter)
 
         job = JobInfo.objects.create(**validated_data)
-
+        
         return job
 
 
