@@ -4,7 +4,12 @@ django-cors-headers==4.6.0
 django-rest-framework==0.1.0
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.4.0
+joblib==1.4.2
+numpy==2.2.3
 pillow==11.1.0
 PyJWT==2.10.1
+scikit-learn==1.6.1
+scipy==1.15.2
 sqlparse==0.5.3
+threadpoolctl==3.5.0
 tzdata==2024.2

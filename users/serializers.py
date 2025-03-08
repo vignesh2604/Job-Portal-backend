@@ -84,7 +84,7 @@ class RecruiterSerializer(serializers.ModelSerializer):
         model = Recruiter
         fields = "__all__"
         read_only_fields = ['user','created_ts', 'updated_ts']
-
+    
     def validate(self, data):
         dupuser = self.initial_data.get('dupuser', None)
         print(dupuser)

@@ -176,5 +176,5 @@ EMAIL_HOST_PASSWORD = 'pgtm ljuh udln yipw'
 # Handle file uploads
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024 # 10 Mb limit
 

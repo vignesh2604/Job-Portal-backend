@@ -31,7 +31,7 @@ class JobApplication(models.Model):
     # Foreign Key to allow multiple job seekers to apply for multiple jobs
     jobseeker = models.ForeignKey(JobSeeker, on_delete=models.CASCADE)
     jobinfo = models.ForeignKey(JobInfo, on_delete=models.CASCADE)
-    recruiter_id = models.OneToOneField(Recruiter, on_delete=models.CASCADE)
+    recruiter_id = models.ForeignKey(Recruiter, on_delete=models.CASCADE)
     # Job seeker application form
     resume = models.FileField(upload_to='resume/')
     email = models.EmailField(max_length=100)

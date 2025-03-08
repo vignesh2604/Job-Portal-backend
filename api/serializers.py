@@ -62,4 +62,9 @@ class JobApplicationSerializer(serializers.ModelSerializer):
         applied_job = JobApplication.objects.create(**validated_data)
 
         return applied_job
+
+class JobSeekerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobSeeker
+        fields = "__all__"
         

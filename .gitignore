@@ -5,3 +5,6 @@ __pycache__/
 
 # db
 db.sqlite3
+
+# Media
+media/

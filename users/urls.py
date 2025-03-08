@@ -13,7 +13,7 @@ router.register(r'recruiter', views.RecruiterViewSet, basename='recruiter')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('logout/', views.LogoutView.as_view(), name='logout'),
     path('fetchUser/', views.fetchUserDetails.as_view(), name='fetchUser'),
-    path('getJobseekers/', views.RetrieveJobSeekersList.as_view(), name="JobseekersList")
+    path('getJobseekers/', views.RetrieveJobSeekersList.as_view(), name="getJobseekers"),
+    path('notify/', views.NotifyJobSeekers.as_view(), name="notify"),
 ]
